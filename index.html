@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azouz-TK | المنصة الرقمية العالمية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background: #fbfbfd; color: #1d1d1f; overflow-x: hidden; }
+        .tech-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: radial-gradient(#0071e3 0.8px, transparent 0.8px); background-size: 30px 30px; opacity: 0.1; }
+        .apple-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .product-card { background: white; border-radius: 32px; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); border: 1px solid rgba(0,0,0,0.02); cursor: pointer; }
+        .product-card:hover { transform: scale(1.03) translateY(-10px); box-shadow: 0 40px 80px rgba(0,0,0,0.1); }
+        .btn-apple { background: #0071e3; color: white; border-radius: 980px; transition: 0.3s; font-weight: bold; }
+        .btn-apple:hover { opacity: 0.8; transform: scale(1.05); }
+        .view-page { display: none; }
+        .active { display: block !important; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .whatsapp-btn { position: fixed; bottom: 30px; left: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: white; z-index: 1000; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3); }
+    </style>
+</head>
+<body>
+
+    <div class="tech-bg"></div>
+    <a href="https://wa.me/966500000000" id="wa-float" class="whatsapp-btn"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- [ لوحة التحكم: تعدل بياناتك من هنا مستقبلاً ] -->
+    <script>
+        const STORE_CONFIG = {
+            whatsapp: "966500000000", // ضع رقمك هنا
+            products: [
+                {
+                    id: 1,
+                    name: "بطاقة شحن رقمية",
+                    price: "150",
+                    oldPrice: "190",
+                    image: "https://via.placeholder.com/500", // رابط الصورة
+                    salla_id: "123456", // الرقم من سلة
+                    desc: "أفضل خدمة شحن رقمية فورية وآمنة 100%."
+                },
+                {
+                    id: 2,
+                    name: "باقة الألعاب المميزة",
+                    price: "299",
+                    oldPrice: "400",
+                    image: "https://via.placeholder.com/500",
+                    salla_id: "789012",
+                    desc: "وصول حصري لأقوى الألعاب بضمان متجر عزوز."
+                }
+            ]
+        };
+    </script>
+
+    <!-- Navbar -->
+    <nav class="apple-nav fixed w-full z-50 px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+            <div class="w-10 h-10 bg-black rounded-xl flex items-center justify-center text-white font-black italic shadow-lg">AZ</div>
+            <span class="text-2xl font-black tracking-tighter uppercase">AZOUZ<span class="text-[#0071e3]">-TK</span></span>
+        </div>
+        <button onclick="showPage('home')" class="btn-apple px-6 py-2 text-xs">المتجر الرسمي</button>
+    </nav>
+
+    <!-- صفحة المتجر -->
+    <main id="home-page" class="view-page active pt-40 pb-20 px-6 max-w-7xl mx-auto">
+        <header class="text-center mb-24">
+            <h1 class="text-6xl md:text-9xl font-black tracking-tighter leading-tight mb-8 italic">AZOUZ <span class="text-[#0071e3]">TECH</span></h1>
+            <p class="text-gray-400 text-xl md:text-2xl font-light">مستقبل الخدمات الرقمية بمعايير Apple.</p>
+        </header>
+        <div id="store-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12"></div>
+    </main>
+
+    <!-- صفحة التفاصيل -->
+    <section id="detail-page" class="view-page pt-40 pb-20 px-6 max-w-6xl mx-auto">
+        <button onclick="showPage('home')" class="text-blue-600 font-bold mb-10">← العودة</button>
+        <div id="product-content" class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center"></div>
+    </section>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.view-page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId + '-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function openProduct(id) {
+            const p = STORE_CONFIG.products.find(item => item.id === id);
+            const content = document.getElementById('product-content');
+            content.innerHTML = `
+                <div class="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100"><img src="${p.image}" class="w-full rounded-3xl"></div>
+                <div>
+                    <h2 class="text-5xl md:text-7xl font-black mb-8 leading-tight">${p.name}</h2>
+                    <div class="flex items-center gap-6 mb-10">
+                        <span class="text-5xl font-black text-[#0071e3]">${p.price} ر.س</span>
+                        <span class="text-2xl text-gray-300 line-through">${p.oldPrice} ر.س</span>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl mb-12 border border-gray-50 text-gray-500">${p.desc}</div>
+                    <a href="https://salla.sa/azouz-tk/cart/add/${p.salla_id}" class="btn-apple block text-center py-6 text-2xl shadow-2xl">إتمام الطلب الآن</a>
+                </div>
+            `;
+            showPage('detail');
+        }
+
+        window.onload = () => {
+            document.getElementById('wa-float').href = `https://wa.me/${STORE_CONFIG.whatsapp}`;
+            const grid = document.getElementById('store-grid');
+            STORE_CONFIG.products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card p-8" onclick="openProduct(${p.id})">
+                        <div class="h-64 mb-8 bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center">
+                            <img src="${p.image}" class="max-h-full hover:scale-110 transition duration-700">
+                        </div>
+                        <h3 class="text-3xl font-black mb-4">${p.name}</h3>
+                        <div class="flex justify-between items-center border-t border-gray-50 pt-6">
+                            <span class="text-2xl font-black text-[#0071e3]">${p.price} ر.س</span>
+                            <span class="text-gray-400 font-bold text-sm">التفاصيل ></span>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+    </script>
+</body>
+</html>

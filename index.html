@@ -3,205 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azouz-TK | المنصة الرقمية العالمية</title>
+    <title>Azouz-TK | المنصة الرقمية المتكاملة</title>
     
-    <!-- Scripts -->
+    <!-- التقنيات: Vue.js + Tailwind + Firebase -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { --main-blue: #0071e3; --accent: #00d1ff; --bg-gray: #f5f5f7; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-gray); color: #1d1d1f; overflow-x: hidden; }
-        
-        /* الخلفية التقنية الذكية */
-        .tech-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: radial-gradient(var(--accent) 0.6px, transparent 0.6px);
-            background-size: 30px 30px; opacity: 0.12;
-            animation: moveGrid 40s linear infinite;
-        }
-        @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 200px 200px; } }
-
-        /* التصميم الزجاجي */
-        .glass-header { background: rgba(255, 255, 255, 0.85); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid white; border-radius: 32px; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); }
-        .glass-card:hover { transform: scale(1.03) translateY(-10px); box-shadow: 0 40px 80px rgba(0,113,227,0.1); border-color: var(--accent); }
-        
-        /* نظام الأقسام */
-        .cat-pill { padding: 10px 25px; border-radius: 980px; font-weight: bold; font-size: 14px; border: 1px solid #d2d2d7; transition: 0.3s; cursor: pointer; white-space: nowrap; }
-        .cat-pill.active { background: var(--main-blue); color: white; border-color: var(--main-blue); box-shadow: 0 10px 20px rgba(0,113,227,0.2); }
-
-        .view-page { display: none; }
-        .active-view { display: block !important; animation: fadeIn 0.6s ease; }
+        :root { --main: #0071e3; --accent: #00d1ff; --bg: #f5f5f7; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: #1d1d1f; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .card { background: white; border-radius: 30px; border: 1px solid rgba(0,0,0,0.03); transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1); cursor: pointer; }
+        .card:hover { transform: scale(1.02) translateY(-10px); box-shadow: 0 40px 80px rgba(0,113,227,0.1); border-color: var(--accent); }
+        .tech-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: radial-gradient(var(--accent) 0.6px, transparent 0.6px); background-size: 30px 30px; opacity: 0.15; animation: move 40s linear infinite; }
+        @keyframes move { from { background-position: 0 0; } to { background-position: 200px 200px; } }
+        .page-view { display: none; }
+        .active { display: block !important; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: white; z-index: 1000; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3); }
+        .btn-grad { background: linear-gradient(135deg, var(--main), var(--accent)); color: white; border-radius: 980px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,113,227,0.2); }
+        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: white; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="tech-overlay"></div>
-    <a href="https://wa.me/966500000000" id="wa-link" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+    <div id="app">
+        <div class="tech-grid"></div>
+        <!-- زر الواتساب -->
+        <a :href="'https://wa.me/' + settings.whatsapp" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 
-    <!-- [ لوحة التحكم المركزية - أضف أقسامك ومنتجاتك هنا ] -->
-    <script>
-        const AZOUZ_DATABASE = {
-            config: {
-                whatsapp: "966500000000",
-                admin_pass: "123456",
-                store_url: "https://salla.sa/azouz-tk"
-            },
-            // أضف أي قسم تريده هنا
-            categories: ["الكل", "ألعاب", "بطاقات رقمية", "اشتراكات", "خدمات تقنية", "برامج"],
-            
-            // أضف منتجاتك هنا (اربط كل منتج بقسمه)
-            products: [
-                { id: 1, cat: "ألعاب", name: "شدات ببجي - 600", price: "45", oldPrice: "60", img: "https://via.placeholder.com/500", salla: "123", desc: "شحن فوري عبر الأيدي." },
-                { id: 2, cat: "اشتراكات", name: "يوتيوب بريميوم - سنة", price: "120", oldPrice: "200", img: "https://via.placeholder.com/500", salla: "456", desc: "اشتراك رسمي بضمان كامل." },
-                { id: 3, cat: "بطاقات رقمية", name: "بطاقة آيتونز 100$", price: "375", oldPrice: "400", img: "https://via.placeholder.com/500", salla: "789", desc: "كود فوري يوصلك برسالة." },
-                { id: 4, cat: "خدمات تقنية", name: "تصميم متجر احترافي", price: "999", oldPrice: "1500", img: "https://via.placeholder.com/500", salla: "000", desc: "تصميم عصري مثل متجر آبل." },
-                // أضف مئات المنتجات هنا بنفس التنسيق...
-            ]
-        };
-    </script>
-
-    <!-- Navbar -->
-    <nav class="glass-header fixed w-full z-50 px-8 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="showView('home')">
-            <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center text-white font-black italic shadow-lg">AZ</div>
-            <span class="text-2xl font-black tracking-tighter uppercase">AZOUZ<span class="text-[#0071e3]">-TK</span></span>
-        </div>
-        <div class="flex items-center gap-6">
-            <div class="hidden md:flex gap-4 items-center bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
-                <i class="fas fa-search text-gray-400"></i>
-                <input type="text" id="search-input" onkeyup="searchProducts()" placeholder="ابحث عن منتج..." class="bg-transparent border-none outline-none text-xs w-40 font-bold">
+        <!-- Navbar -->
+        <nav class="glass fixed w-full z-50 px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" @click="view = 'home'">
+                <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center text-white font-black shadow-lg">AZ</div>
+                <span class="text-2xl font-black tracking-tighter uppercase">AZOUZ<span class="text-[#0071e3]">-TK</span></span>
             </div>
-            <button onclick="openAdmin()" class="text-gray-300 hover:text-blue-600 transition"><i class="fas fa-lock"></i></button>
-        </div>
-    </nav>
-
-    <!-- [ واجهة المتجر الرئيسية ] -->
-    <main id="home-view" class="page-view active-view pt-32 pb-20 px-6 max-w-7xl mx-auto">
-        <header class="text-center mb-16">
-            <h1 class="text-6xl md:text-9xl font-black leading-none mb-6 tracking-tighter italic">THE <span class="text-[#0071e3]">PLATFORM.</span></h1>
-            <p class="text-gray-400 text-xl md:text-2xl font-light">استكشف أكبر تشكيلة من المنتجات الرقمية في مكان واحد.</p>
-        </header>
-
-        <!-- شريط الأقسام الذكي -->
-        <div class="flex overflow-x-auto gap-4 mb-16 pb-4 no-scrollbar justify-start md:justify-center" id="category-bar">
-            <!-- سيتم توليد الأقسام هنا -->
-        </div>
-
-        <div id="store-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <!-- المنتجات تتولد هنا -->
-        </div>
-    </main>
-
-    <!-- [ واجهة تفاصيل المنتج ] -->
-    <section id="detail-view" class="page-view pt-32 pb-20 px-6 max-w-7xl mx-auto">
-        <button onclick="showView('home')" class="text-blue-600 font-bold mb-12 text-lg">← العودة للمتجر</button>
-        <div id="detail-content" class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
-            <!-- محتوى تفصيلي -->
-        </div>
-    </section>
-
-    <!-- [ لوحة الإدارة ] -->
-    <section id="admin-view" class="page-view pt-32 pb-20 px-6 max-w-5xl mx-auto">
-        <div class="glass-card p-12 text-right">
-            <h2 class="text-4xl font-black mb-8">إدارة المنصة 🛡️</h2>
-            <p class="text-gray-500 mb-10">لإضافة منتجات، عدل مصفوفة البيانات في كود GitHub (AZOUZ_DATABASE).</p>
-            <div id="admin-list" class="space-y-4 font-bold text-sm">
-                <!-- قائمة المنتجات مجمعة حسب القسم -->
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 text-center text-gray-400 text-[10px] font-black tracking-widest uppercase border-t border-gray-100 mt-40">
-        © 2024 AZOUZ-TK DIGITAL ECOSYSTEM | DEVELOPED BY SMART AI
-    </footer>
-
-    <script>
-        function showView(view) {
-            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
-            document.getElementById(view + '-view').classList.add('active-view');
-            window.scrollTo(0, 0);
-        }
-
-        function openAdmin() {
-            if(prompt("كلمة مرور الإدارة:") === AZOUZ_DATABASE.config.admin_pass) showView('admin');
-        }
-
-        function renderCategories() {
-            const bar = document.getElementById('category-bar');
-            AZOUZ_DATABASE.categories.forEach(cat => {
-                const btn = document.createElement('div');
-                btn.className = `cat-pill ${cat === 'الكل' ? 'active' : ''}`;
-                btn.innerText = cat;
-                btn.onclick = () => {
-                    document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    renderStore(cat);
-                };
-                bar.appendChild(btn);
-            });
-        }
-
-        function renderStore(filter = 'الكل', searchTerm = '') {
-            const grid = document.getElementById('store-grid');
-            grid.innerHTML = '';
-            
-            let filtered = AZOUZ_DATABASE.products;
-            if(filter !== 'الكل') filtered = filtered.filter(p => p.cat === filter);
-            if(searchTerm) filtered = filtered.filter(p => p.name.includes(searchTerm));
-
-            filtered.forEach(p => {
-                grid.innerHTML += `
-                    <div class="glass-card p-8 cursor-pointer group" onclick="openProduct(${p.id})">
-                        <div class="aspect-square rounded-[24px] bg-gray-50 mb-8 overflow-hidden flex items-center justify-center border border-gray-100">
-                            <img src="${p.img}" class="max-h-[80%] transition duration-700 group-hover:scale-110">
-                        </div>
-                        <span class="text-blue-600 font-black uppercase text-[10px] tracking-widest mb-2 block">${p.cat}</span>
-                        <h3 class="text-2xl font-black mb-4 leading-tight">${p.name}</h3>
-                        <div class="flex justify-between items-center pt-6 border-t border-gray-50 mt-4">
-                            <span class="text-2xl font-black text-black">${p.price} ر.س</span>
-                            <span class="text-gray-400 font-bold text-xs">عرض ></span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function searchProducts() {
-            const term = document.getElementById('search-input').value;
-            renderStore('الكل', term);
-        }
-
-        function openProduct(id) {
-            const p = AZOUZ_DATABASE.products.find(x => x.id === id);
-            const content = document.getElementById('detail-content');
-            content.innerHTML = `
-                <div class="glass-card p-6 shadow-2xl"><img src="${p.img}" class="w-full rounded-[24px]"></div>
-                <div>
-                    <span class="text-blue-600 font-black uppercase text-xs tracking-widest mb-4 block">${p.cat}</span>
-                    <h2 class="text-6xl font-black mb-10 leading-tight">${p.name}</h2>
-                    <div class="flex items-center gap-8 mb-12">
-                        <span class="text-5xl font-black text-black">${p.price} ر.س</span>
-                        <span class="text-2xl text-gray-300 line-through">${p.oldPrice} ر.س</span>
-                    </div>
-                    <div class="bg-white p-10 rounded-[40px] border border-gray-50 leading-relaxed text-gray-500 mb-12 shadow-sm">${p.desc}</div>
-                    <a href="${AZOUZ_DATABASE.config.store_url}/cart/add/${p.salla_id}" class="bg-[#0071e3] text-white block text-center py-6 text-2xl font-black rounded-full shadow-2xl hover:opacity-80 transition">إتمام الطلب في سلة</a>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex bg-gray-100 px-4 py-2 rounded-full border items-center gap-2">
+                    <i class="fas fa-search text-gray-400"></i>
+                    <input v-model="searchQuery" placeholder="بحث عن منتج..." class="bg-transparent border-none outline-none text-xs font-bold w-40">
                 </div>
-            `;
-            showView('detail');
-        }
+                <button @click="openAdmin" class="text-gray-300 hover:text-blue-600 transition"><i class="fas fa-user-shield text-xl"></i></button>
+                <button @click="view = 'home'" class="bg-black text-white px-6 py-2 rounded-full font-bold text-xs shadow-lg">الرئيسية</button>
+            </div>
+        </nav>
 
-        window.onload = () => {
-            document.getElementById('wa-link').href = `https://wa.me/${AZOUZ_DATABASE.config.whatsapp}`;
-            renderCategories();
-            renderStore();
+        <!-- [1] واجهة المتجر الرئيسية -->
+        <main :class="{ active: view === 'home' }" class="page-view pt-40 pb-20 px-6 max-w-7xl mx-auto">
+            <header class="text-center mb-16">
+                <h1 class="text-6xl md:text-[100px] font-black mb-6 tracking-tighter leading-none italic uppercase">THE <span class="text-[#0071e3]">PLATFORM.</span></h1>
+                <p class="text-gray-400 text-xl font-light">بوابة الخدمات الرقمية الأقوى - تحكم كامل، تجربة عالمية.</p>
+            </header>
+
+            <!-- شريط الأقسام -->
+            <div class="flex overflow-x-auto gap-3 mb-12 pb-4 no-scrollbar justify-start md:justify-center">
+                <button v-for="c in categories" @click="filter = c" 
+                    :class="filter === c ? 'bg-blue-600 text-white shadow-xl' : 'bg-white text-gray-500'" 
+                    class="px-8 py-3 rounded-full border font-black text-xs transition uppercase tracking-widest whitespace-nowrap">
+                    {{c}}
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div v-for="p in filteredProducts" :key="p.id" class="card p-8 text-right" @click="showProduct(p)">
+                    <div class="aspect-square rounded-2xl bg-gray-50 mb-8 overflow-hidden flex items-center justify-center">
+                        <img :src="p.img" class="max-h-[85%] hover:scale-110 transition duration-700">
+                    </div>
+                    <span class="text-blue-600 font-black text-[10px] uppercase tracking-widest mb-2 block">{{p.cat}}</span>
+                    <h3 class="text-2xl font-black mb-4">{{p.name}}</h3>
+                    <div class="flex justify-between items-center pt-6 border-t">
+                        <span class="text-3xl font-black text-gray-900">{{p.price}} ر.س</span>
+                        <span class="bg-gray-100 text-gray-900 px-4 py-2 rounded-full font-black text-[10px]">عرض</span>
+                    </div>
+                </div>
+                <div v-if="filteredProducts.length === 0" class="col-span-full text-center py-20 text-gray-400 font-bold">لا توجد منتجات مطابقة للبحث أو القسم.</div>
+            </div>
+        </main>
+
+        <!-- [2] واجهة تفاصيل المنتج -->
+        <section :class="{ active: view === 'detail' }" class="page-view pt-40 pb-20 px-6 max-w-6xl mx-auto">
+            <button @click="view = 'home'" class="text-blue-600 font-black mb-10 text-lg">← العودة للمتجر</button>
+            <div v-if="selectedProduct" class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                <div class="card p-10 shadow-2xl border-none bg-white"><img :src="selectedProduct.img" class="w-full rounded-[30px]"></div>
+                <div class="text-right px-4">
+                    <span class="text-blue-600 font-black uppercase text-xs tracking-widest mb-4 block">{{selectedProduct.cat}}</span>
+                    <h2 class="text-6xl font-black mb-10 leading-tight">{{selectedProduct.name}}</h2>
+                    <p class="text-6xl font-black text-black mb-12">{{selectedProduct.price}} ر.س</p>
+                    <div class="bg-white p-10 rounded-[40px] border shadow-sm text-gray-500 text-lg leading-relaxed mb-16">{{selectedProduct.desc}}</div>
+                    <a :href="'https://salla.sa/azouz-tk/cart/add/' + selectedProduct.salla_id" class="btn-grad block text-center py-6 text-3xl font-black shadow-2xl">إتمام الطلب في سلة</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- [3] لوحة الإدارة (Admin Dashboard) -->
+        <section :class="{ active: view === 'admin' }" class="page-view pt-40 pb-20 px-6 max-w-5xl mx-auto text-right">
+            <div class="bg-white p-12 rounded-[40px] shadow-2xl border">
+                <div class="flex justify-between items-center mb-10">
+                    <h2 class="text-4xl font-black text-blue-600">إدارة المنصة 🛡️</h2>
+                    <button @click="view = 'home'" class="text-red-500 font-bold">إغلاق</button>
+                </div>
+
+                <!-- إعدادات المتجر -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 p-8 bg-gray-50 rounded-[30px]">
+                    <div class="flex flex-col"><label class="font-bold mb-2">رقم الواتساب:</label><input v-model="settings.whatsapp" class="p-4 rounded-2xl border outline-none"></div>
+                    <div class="flex flex-col"><label class="font-bold mb-2">كلمة سر الإدارة:</label><input v-model="settings.admin_pass" class="p-4 rounded-2xl border outline-none"></div>
+                    <button @click="updateSettings" class="btn-grad py-4 text-xl font-bold md:col-span-2">حفظ الإعدادات</button>
+                </div>
+
+                <!-- إدارة الأقسام -->
+                <div class="mb-12 p-8 bg-blue-50/50 rounded-[30px] border border-blue-100">
+                    <h3 class="text-xl font-black mb-4">إضافة قسم جديد</h3>
+                    <div class="flex gap-4">
+                        <input v-model="newCat" placeholder="اسم القسم..." class="p-4 rounded-2xl border flex-1">
+                        <button @click="addCategory" class="bg-green-600 text-white px-8 rounded-2xl font-bold">إضافة</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-6">
+                        <span v-for="c in categories" v-if="c !== 'الكل'" class="bg-white border px-4 py-2 rounded-xl flex items-center gap-3">
+                            {{c}} <i @click="deleteCategory(c)" class="fas fa-times text-red-400 cursor-pointer"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- إضافة منتج -->
+                <h3 class="text-2xl font-black mb-6">إضافة منتج جديد</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                    <input v-model="newP.name" placeholder="اسم المنتج" class="p-4 rounded-2xl border">
+                    <input v-model="newP.price" placeholder="السعر" class="p-4 rounded-2xl border">
+                    <select v-model="newP.cat" class="p-4 rounded-2xl border bg-white font-bold">
+                        <option v-for="c in categories" :value="c">{{c}}</option>
+                    </select>
+                    <input v-model="newP.img" placeholder="رابط الصورة" class="p-4 rounded-2xl border">
+                    <input v-model="newP.salla_id" placeholder="Salla ID (رقم المنتج من سلة)" class="p-4 rounded-2xl border">
+                    <textarea v-model="newP.desc" placeholder="وصف المنتج التفصيلي" class="col-span-full p-4 rounded-2xl border h-32"></textarea>
+                    <button @click="addProduct" class="btn-grad p-6 text-2xl font-black col-span-full">نشر المنتج في الموقع</button>
+                </div>
+
+                <!-- قائمة المنتجات -->
+                <h3 class="text-2xl font-black mb-6 text-red-600">المنتجات المنشورة</h3>
+                <div class="space-y-3">
+                    <div v-for="p in products" class="flex justify-between items-center bg-white p-6 rounded-2xl border shadow-sm">
+                        <div class="flex items-center gap-4">
+                            <img :src="p.img" class="w-12 h-12 object-contain rounded-lg">
+                            <span class="font-black text-lg">{{p.name}}</span>
+                        </div>
+                        <button @click="deleteProduct(p.id)" class="text-red-500 font-bold hover:underline">حذف المنتج</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- المحرك الذكي (Vue 3 + Firebase) -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // [ ! بيانات الفايربيز المربوطة بحسابك ! ]
+        const firebaseConfig = {
+            apiKey: "AIzaSyAZ5vO9W-i7tbSPD55VNtwrgR3DJ9hfAEA",
+            authDomain: "azooz-tk.firebaseapp.com",
+            projectId: "azooz-tk",
+            storageBucket: "azooz-tk.firebasestorage.app",
+            messagingSenderId: "575551833960",
+            appId: "1:575551833960:web:5003b9747e8a9eeb88f8dd",
+            measurementId: "G-N98V929JZ4"
         };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    view: 'home', filter: 'الكل', searchQuery: '',
+                    products: [], categories: ['الكل'],
+                    settings: { whatsapp: '966500000000', admin_pass: '123456' },
+                    newP: { name: '', price: '', cat: 'الكل', img: '', desc: '', salla_id: '' },
+                    newCat: '', selectedProduct: null
+                }
+            },
+            computed: {
+                filteredProducts() {
+                    let filtered = this.products;
+                    if (this.filter !== 'الكل') filtered = filtered.filter(p => p.cat === this.filter);
+                    if (this.searchQuery) filtered = filtered.filter(p => p.name.includes(this.searchQuery));
+                    return filtered;
+                }
+            },
+            async mounted() {
+                this.loadData();
+            },
+            methods: {
+                async loadData() {
+                    // تحميل المنتجات
+                    const pSnap = await db.collection('products').orderBy('date', 'desc').get();
+                    this.products = pSnap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+                    // تحميل الإعدادات والأقسام
+                    const sSnap = await db.collection('config').doc('main').get();
+                    if(sSnap.exists) {
+                        this.settings = sSnap.data().settings;
+                        this.categories = sSnap.data().categories;
+                    } else {
+                        // إنشاء إعدادات افتراضية لو المتجر جديد
+                        await db.collection('config').doc('main').set({ settings: this.settings, categories: this.categories });
+                    }
+                },
+                async addProduct() {
+                    if(!this.newP.name || !this.newP.price) return alert("امسح الخانات الفارغة");
+                    await db.collection('products').add({...this.newP, date: new Date()});
+                    this.newP = { name: '', price: '', cat: 'الكل', img: '', desc: '', salla_id: '' };
+                    this.loadData();
+                    alert('تم النشر!');
+                },
+                async deleteProduct(id) {
+                    if(confirm('متأكد؟')) {
+                        await db.collection('products').doc(id).delete();
+                        this.loadData();
+                    }
+                },
+                async addCategory() {
+                    if(this.newCat && !this.categories.includes(this.newCat)) {
+                        this.categories.push(this.newCat);
+                        await this.updateSettings();
+                        this.newCat = '';
+                    }
+                },
+                async deleteCategory(cat) {
+                    this.categories = this.categories.filter(c => c !== cat);
+                    await this.updateSettings();
+                },
+                async updateSettings() {
+                    await db.collection('config').doc('main').update({ settings: this.settings, categories: this.categories });
+                    alert('تم التحديث بنجاح');
+                },
+                openAdmin() {
+                    const pass = prompt('أدخل كلمة سر الإدارة:');
+                    if(pass === this.settings.admin_pass) this.view = 'admin';
+                },
+                showProduct(p) {
+                    this.selectedProduct = p;
+                    this.view = 'detail';
+                    window.scrollTo(0,0);
+                },
+                showView(v) { this.view = v; window.scrollTo(0,0); }
+            }
+        }).mount('#app');
     </script>
 </body>
 </html>

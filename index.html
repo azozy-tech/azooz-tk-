@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azouz-TK | منصة التحكم الفوري</title>
+    <title>Azouz-TK | المستلزمات التقنية الذكية</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -12,160 +12,187 @@
     <style>
         :root { --brand: #000; --blue: #007aff; --bg: #ffffff; }
         body { font-family: 'Tajawal', sans-serif; background-color: var(--bg); color: var(--brand); scroll-behavior: smooth; overflow-x: hidden; }
-        .tech-bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 50%, rgba(0,122,255,0.03) 0%, transparent 100%); }
-        .pro-card { border-radius: 20px; border: 1px solid #f0f0f0; transition: 0.4s ease; background: #fff; }
-        .pro-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); border-color: var(--brand); }
-        .page-view { display: none; }
-        .active { display: block !important; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .admin-panel { background: #fff; border: 2px solid #000; border-radius: 25px; }
-        .input-pro { width: 100%; p: 12px; border: 2px solid #f0f0f0; border-radius: 12px; outline: none; padding: 12px; transition: 0.3s; }
-        .input-pro:focus { border-color: var(--blue); }
+        
+        /* تصميم RAVPower الدقيق */
+        .promo-bar { background: #000; color: #fff; text-align: center; padding: 10px; font-size: 11px; font-weight: 900; letter-spacing: 2px; }
+        .glass-nav { background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #eee; }
+        
+        /* البطاقات الاحترافية */
+        .rav-card { border: 1px solid #f2f2f2; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: 100%; display: flex; flex-direction: column; }
+        .rav-card:hover { border-color: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.04); transform: translateY(-5px); }
+        
+        .hero-banner { background: #f9f9f9; border-radius: 0px; min-height: 600px; display: flex; align-items: center; justify-content: center; }
+        .hero-title { font-weight: 900; line-height: 1; letter-spacing: -3px; font-size: clamp(3rem, 10vw, 8rem); }
+
+        .btn-rav { background: #000; color: #fff; padding: 16px 40px; font-weight: 900; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-rav:hover { opacity: 0.8; }
+
+        .view-page { display: none; }
+        .active { display: block !important; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .whatsapp-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: white; z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* لوحة تحكم ذكية جداً */
+        .admin-panel { background: #fff; border-top: 5px solid #000; box-shadow: 0 -50px 100px rgba(0,0,0,0.1); }
+        .input-box { width: 100%; padding: 15px; border: 1px solid #ddd; outline: none; transition: 0.3s; font-weight: bold; }
+        .input-box:focus { border-color: #000; background: #fafafa; }
     </style>
 </head>
 <body>
 
     <div id="app">
-        <div class="tech-bg"></div>
+        <!-- شريط العروض -->
+        <div class="promo-bar uppercase">توصيل سريع لجميع الخدمات الرقمية | ضمان Azouz-TK الذهبي</div>
+
         <a :href="'https://wa.me/' + settings.whatsapp" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 
         <!-- Header -->
-        <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-4 cursor-pointer" @dblclick="openAdmin">
-                <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center text-white font-black italic shadow-lg cursor-pointer" @click="goHome">AZ</div>
-                <div class="flex flex-col" @click="goHome">
-                    <span class="text-xl font-black tracking-tighter uppercase leading-none">AZOUZ<span class="text-blue-600">TK</span></span>
-                    <span class="text-[7px] font-bold tracking-[3px] text-gray-400 uppercase">Pro Store</span>
+        <nav class="glass-nav fixed w-full z-50 px-8 py-5 flex justify-between items-center top-[36px]">
+            <div class="flex items-center gap-10">
+                <div class="cursor-pointer" @dblclick="openAdmin">
+                    <svg width="45" height="45" viewBox="0 0 100 100" @click="goHome">
+                        <rect width="100" height="100" rx="15" fill="black"/>
+                        <path d="M25 70L45 30H55L75 70M35 55H65M80 30L20 75H80" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="hidden lg:flex gap-8 font-black text-[12px] uppercase tracking-[2px] text-gray-500">
+                    <a href="javascript:void(0)" @click="goHome" class="hover:text-black">الرئيسية</a>
+                    <a href="#products-area" @click="goHome" class="hover:text-black">المتجر</a>
+                    <a href="javascript:void(0)" class="hover:text-black">العروض</a>
                 </div>
             </div>
+            
             <div class="flex items-center gap-6">
-                <div class="hidden md:flex bg-gray-50 px-4 py-2 rounded-full border items-center gap-2">
+                <div class="flex bg-gray-50 px-4 py-2 border items-center gap-3">
                     <i class="fas fa-search text-gray-400 text-xs"></i>
-                    <input v-model="searchQuery" placeholder="بحث..." class="bg-transparent border-none outline-none text-xs font-bold w-32">
+                    <input v-model="searchQuery" placeholder="بحث..." class="bg-transparent border-none outline-none text-xs font-bold w-32 md:w-64">
                 </div>
-                <button @click="goHome" class="text-xs font-black uppercase border-b-2 border-black pb-1">المتجر</button>
+                <div class="relative cursor-pointer" @click="goHome"><i class="fas fa-shopping-bag text-xl"></i></div>
             </div>
         </nav>
 
-        <!-- [1] الصفحة الرئيسية -->
-        <main :class="{ active: view === 'home' }" class="page-view pt-32 pb-40">
-            <!-- Hero -->
-            <header class="max-w-[1440px] mx-auto px-6 mb-16">
-                <div class="rounded-[40px] bg-black text-white p-12 flex flex-col md:flex-row items-center justify-between min-h-[500px]">
-                    <div class="md:w-1/2 text-right">
-                        <h1 class="text-5xl md:text-7xl font-black mb-6 italic uppercase leading-none">POWER YOUR <br> <span class="text-blue-500">DREAMS.</span></h1>
-                        <p class="text-gray-400 text-lg mb-10 max-w-sm">أرقى الحلول التقنية والخدمات الرقمية بين يديك الآن.</p>
-                        <button @click="scrollToProducts" class="bg-white text-black px-10 py-4 rounded-xl font-black uppercase text-sm hover:bg-blue-500 hover:text-white transition">ابدأ التسوق</button>
-                    </div>
-                    <div class="md:w-1/2 flex justify-center mt-10 md:mt-0">
-                        <video v-if="settings.hero_video" :src="settings.hero_video" autoplay loop muted class="w-full h-80 object-cover rounded-3xl shadow-2xl"></video>
-                        <div v-else class="text-[150px] font-black italic text-gray-800">AZ</div>
-                    </div>
+        <!-- [1] واجهة المتجر (RAVPower Design) -->
+        <main :class="{ active: view === 'home' }" class="page-view pt-32">
+            
+            <!-- Hero Video/Image -->
+            <header class="hero-banner flex flex-col md:flex-row px-10 gap-10">
+                <div class="md:w-1/2 text-right">
+                    <h1 class="hero-title uppercase italic">NEXT GEN<br><span class="text-blue-600">TECH.</span></h1>
+                    <p class="text-gray-500 text-xl mt-8 mb-12 max-w-lg">اكتشف القوة الحقيقية مع منتجاتنا المختارة بعناية لتناسب أسلوب حياتك الرقمي.</p>
+                    <button @click="scrollToProducts" class="btn-rav">تصفح الآن</button>
+                </div>
+                <div class="md:w-1/2 overflow-hidden rounded-[40px] shadow-2xl h-[500px]">
+                    <video v-if="settings.hero_video" :src="settings.hero_video" autoplay loop muted class="w-full h-full object-cover"></video>
+                    <img v-else :src="settings.hero_image || 'https://via.placeholder.com/800x600/000/fff?text=Azouz+TK'" class="w-full h-full object-cover">
                 </div>
             </header>
 
-            <!-- Categories -->
-            <div id="products-section" class="flex overflow-x-auto gap-3 mb-12 px-6 no-scrollbar justify-start md:justify-center">
-                <button v-for="c in categories" @click="filter = c" 
-                    :class="filter === c ? 'bg-black text-white' : 'bg-gray-100 text-gray-400'" 
-                    class="px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition">
-                    {{c}}
-                </button>
-            </div>
+            <!-- التصنيفات -->
+            <div id="products-area" class="py-20 px-8">
+                <div class="flex overflow-x-auto gap-4 mb-16 no-scrollbar justify-center border-b pb-4">
+                    <button v-for="c in categories" @click="filter = c" 
+                        :class="filter === c ? 'text-black border-black' : 'text-gray-400 border-transparent'" 
+                        class="px-8 py-2 border-b-4 font-black text-xs transition uppercase tracking-widest">
+                        {{c}}
+                    </button>
+                </div>
 
-            <!-- Products -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 max-w-[1440px] mx-auto">
-                <div v-for="p in filteredProducts" :key="p.id" class="pro-card p-5 cursor-pointer group" @click="showProduct(p)">
-                    <div class="aspect-square bg-gray-50 rounded-xl mb-6 overflow-hidden flex items-center justify-center">
-                        <img :src="p.img" class="max-h-[85%] transition duration-500 group-hover:scale-110">
-                    </div>
-                    <span class="text-blue-600 font-black text-[9px] uppercase tracking-widest mb-2 block">{{p.cat}}</span>
-                    <h3 class="text-md font-bold mb-4 h-10 line-clamp-2 uppercase">{{p.name}}</h3>
-                    <div class="flex justify-between items-center pt-4 border-t">
-                        <span class="text-xl font-black">{{p.price}} ر.س</span>
-                        <span class="text-gray-300 font-bold text-[10px]">عرض ></span>
+                <!-- شبكة المنتجات -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+                    <div v-for="p in filteredProducts" :key="p.id" class="rav-card p-8 cursor-pointer group" @click="showProduct(p)">
+                        <div class="aspect-square mb-8 overflow-hidden flex items-center justify-center">
+                            <img :src="p.img || 'https://via.placeholder.com/400?text=No+Image'" class="max-h-[90%] transition duration-500 group-hover:scale-110">
+                        </div>
+                        <span class="text-blue-600 font-black text-[9px] uppercase tracking-widest mb-2 block">{{p.cat}}</span>
+                        <h3 class="text-lg font-black mb-6 h-12 line-clamp-2 uppercase leading-tight">{{p.name || 'منتج جديد'}}</h3>
+                        <div class="flex justify-between items-center pt-6 border-t">
+                            <span class="text-2xl font-black">{{p.price || '0'}} ر.س</span>
+                            <span class="text-gray-300 font-bold text-xs group-hover:text-black">SHOP NOW ></span>
+                        </div>
                     </div>
                 </div>
+                <div v-if="filteredProducts.length === 0" class="text-center py-40 text-gray-300 font-black">لا توجد منتجات حالياً</div>
             </div>
         </main>
 
-        <!-- [2] صفحة التفاصيل -->
-        <section :class="{ active: view === 'detail' }" class="page-view pt-32 px-6 max-w-[1440px] mx-auto pb-40">
-            <button @click="goHome" class="font-black text-xs uppercase mb-10 block">← العودة للمتجر</button>
-            <div v-if="selectedProduct" class="flex flex-col md:flex-row gap-16">
-                <div class="md:w-1/2 p-10 bg-gray-50 rounded-3xl border">
+        <!-- [2] صفحة تفاصيل المنتج -->
+        <section :class="{ active: view === 'detail' }" class="page-view pt-48 pb-40 px-10 max-w-[1440px] mx-auto">
+            <button @click="goHome" class="font-black text-xs uppercase mb-10 block hover:tracking-widest transition-all">← Back to Store</button>
+            <div v-if="selectedProduct" class="flex flex-col lg:flex-row gap-20">
+                <div class="lg:w-1/2 p-10 bg-gray-50 rounded-[40px]">
                     <img :src="selectedProduct.img" class="w-full h-auto object-contain">
                 </div>
-                <div class="md:w-1/2 text-right">
-                    <span class="text-blue-600 font-black uppercase text-xs tracking-widest mb-4 block">{{selectedProduct.cat}}</span>
-                    <h2 class="text-5xl md:text-7xl font-black mb-8 leading-none uppercase italic">{{selectedProduct.name}}</h2>
-                    <p class="text-6xl font-black mb-10">{{selectedProduct.price}} ر.س</p>
-                    <div class="py-10 border-y mb-10 text-gray-500 text-xl leading-relaxed">{{selectedProduct.desc}}</div>
-                    <a :href="'https://salla.sa/azouz-tk/cart/add/' + selectedProduct.salla_id" class="block bg-black text-white text-center py-6 rounded-2xl font-black text-2xl uppercase tracking-widest shadow-2xl hover:bg-blue-600 transition">إتمام الطلب الآن</a>
+                <div class="lg:w-1/2 text-right">
+                    <span class="text-blue-600 font-black uppercase text-xs tracking-[5px] mb-6 block">{{selectedProduct.cat}}</span>
+                    <h2 class="text-6xl md:text-8xl font-black mb-10 leading-none uppercase italic">{{selectedProduct.name}}</h2>
+                    <p class="text-7xl font-black mb-12">{{selectedProduct.price}} ر.س</p>
+                    <div class="py-12 border-y mb-12 text-gray-500 text-2xl font-light leading-relaxed">{{selectedProduct.desc}}</div>
+                    <a :href="'https://salla.sa/azouz-tk/cart/add/' + selectedProduct.salla_id" class="btn-rav block text-center py-6 text-2xl font-black shadow-2xl">إتمام الطلب الآن</a>
                 </div>
             </div>
         </section>
 
-        <!-- [3] لوحة التحكم (Admin Panel) -->
-        <section :class="{ active: view === 'admin' }" class="page-view pt-32 px-6 max-w-6xl mx-auto pb-40">
-            <div class="admin-panel p-8 md:p-12 text-right">
-                <div class="flex justify-between items-center mb-10 border-b-2 border-black pb-6">
-                    <h2 class="text-3xl font-black uppercase italic">لوحة الإدارة 🛡️</h2>
-                    <button @click="goHome" class="bg-red-500 text-white px-6 py-2 rounded-full font-bold">إغلاق</button>
+        <!-- [3] لوحة الإدارة (The Dashboard) -->
+        <section :class="{ active: view === 'admin' }" class="page-view pt-40 px-6 max-w-7xl mx-auto pb-40">
+            <div class="admin-panel p-10 md:p-16 text-right">
+                <div class="flex justify-between items-center mb-16 border-b-4 border-black pb-8">
+                    <h2 class="text-4xl font-black uppercase italic">DASHBOARD 🛡️</h2>
+                    <button @click="goHome" class="bg-black text-white px-8 py-3 rounded-full font-black">إغلاق</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
                     <!-- الإعدادات -->
-                    <div class="space-y-6">
-                        <h3 class="font-black border-r-4 border-blue-600 pr-3">إعدادات الموقع</h3>
-                        <label class="text-xs font-bold uppercase">رقم الواتساب</label>
-                        <input v-model="settings.whatsapp" class="input-pro">
-                        <label class="text-xs font-bold uppercase">رابط فيديو الواجهة</label>
-                        <input v-model="settings.hero_video" placeholder="رابط mp4" class="input-pro">
-                        <label class="text-xs font-bold uppercase">كلمة السر</label>
-                        <input v-model="settings.admin_pass" class="input-pro">
-                        <button @click="updateSettings" class="w-full bg-black text-white py-4 rounded-xl font-bold uppercase">حفظ الإعدادات</button>
-
-                        <h3 class="font-black border-r-4 border-green-600 pr-3 pt-6">إدارة الأقسام</h3>
-                        <div class="flex gap-2">
-                            <input v-model="newCat" placeholder="قسم جديد" class="input-pro">
-                            <button @click="addCategory" class="bg-green-600 text-white px-6 rounded-xl font-bold">أضف</button>
+                    <div class="space-y-8">
+                        <h3 class="font-black text-xl border-r-4 border-black pr-4 uppercase">إعدادات الموقع العامة</h3>
+                        <div class="space-y-4">
+                            <label class="text-xs font-black">رقم الواتساب (966...)</label>
+                            <input v-model="settings.whatsapp" class="input-box">
+                            <label class="text-xs font-black">رابط فيديو الواجهة (.mp4)</label>
+                            <input v-model="settings.hero_video" class="input-box">
+                            <label class="text-xs font-black">كلمة سر الدخول</label>
+                            <input v-model="settings.admin_pass" class="input-box">
+                            <button @click="updateSettings" class="btn-rav w-full">حفظ التغييرات</button>
                         </div>
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            <span v-for="c in categories" v-if="c !== 'الكل'" class="bg-gray-100 px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-2">
+
+                        <h3 class="font-black text-xl border-r-4 border-blue-600 pr-4 uppercase pt-10">الأقسام</h3>
+                        <div class="flex gap-2">
+                            <input v-model="newCat" placeholder="قسم جديد..." class="input-box">
+                            <button @click="addCategory" class="btn-rav">أضف</button>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-4">
+                            <span v-for="c in categories" v-if="c !== 'الكل'" class="bg-gray-100 p-3 rounded-lg text-xs font-black flex items-center gap-3">
                                 {{c}} <i @click="deleteCategory(c)" class="fas fa-times text-red-500 cursor-pointer"></i>
                             </span>
                         </div>
                     </div>
 
-                    <!-- إضافة وتعديل -->
-                    <div class="space-y-4">
-                        <h3 class="font-black border-r-4 border-black pr-3">{{ editMode ? 'تعديل المنتج' : 'إضافة منتج جديد' }}</h3>
-                        <input v-model="newP.name" placeholder="اسم المنتج" class="input-pro">
-                        <input v-model="newP.price" placeholder="السعر" class="input-pro">
-                        <select v-model="newP.cat" class="input-pro font-bold">
-                            <option v-for="c in categories" :value="c">{{c}}</option>
-                        </select>
-                        <input v-model="newP.salla_id" placeholder="رقم Salla ID" class="input-pro">
-                        <input v-model="newP.img" placeholder="رابط الصورة أو GIF" class="input-pro">
-                        <textarea v-model="newP.desc" placeholder="وصف المنتج" class="input-pro h-32"></textarea>
-                        
-                        <div class="flex gap-2">
-                            <button v-if="editMode" @click="cancelEdit" class="flex-1 bg-gray-200 py-4 rounded-xl font-bold uppercase">إلغاء التعديل</button>
-                            <button @click="saveProduct" class="flex-[2] bg-blue-600 text-white py-4 rounded-xl font-black uppercase text-xl shadow-lg">
-                                {{ editMode ? 'حفظ التعديلات' : 'نشر المنتج الآن' }}
+                    <!-- المنتجات -->
+                    <div class="space-y-6">
+                        <h3 class="font-black text-xl border-r-4 border-black pr-4 uppercase">{{ editMode ? 'تعديل المنتج' : 'إضافة منتج جديد' }}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input v-model="newP.name" placeholder="اسم المنتج" class="input-box">
+                            <input v-model="newP.price" placeholder="السعر" class="input-box">
+                            <select v-model="newP.cat" class="input-box">
+                                <option v-for="c in categories" :value="c">{{c}}</option>
+                            </select>
+                            <input v-model="newP.salla_id" placeholder="رقم Salla ID" class="input-box">
+                            <input v-model="newP.img" placeholder="رابط الصورة أو GIF" class="input-box col-span-full">
+                            <textarea v-model="newP.desc" placeholder="الوصف..." class="input-box col-span-full h-32"></textarea>
+                            <button @click="saveProduct" class="btn-rav col-span-full py-6 text-xl shadow-xl">
+                                {{ editMode ? 'تحديث البيانات' : 'نشر في المتجر' }}
                             </button>
+                            <button v-if="editMode" @click="cancelEdit" class="col-span-full bg-gray-200 p-4 font-bold">إلغاء التعديل</button>
                         </div>
 
-                        <h3 class="font-black text-red-600 border-r-4 border-red-600 pr-3 pt-6">قائمة المنتجات</h3>
-                        <div class="max-h-60 overflow-y-auto space-y-2 border p-2 rounded-xl">
-                            <div v-for="p in products" class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
-                                <span class="font-bold text-xs">{{p.name}}</span>
-                                <div class="flex gap-3">
-                                    <button @click="startEdit(p)" class="text-blue-600 font-bold text-[10px]">تعديل</button>
-                                    <button @click="deleteProduct(p.id)" class="text-red-600 font-bold text-[10px]">حذف</button>
+                        <h3 class="font-black text-xl text-red-600 border-r-4 border-red-600 pr-4 uppercase pt-10">قائمة المنتجات</h3>
+                        <div class="space-y-2 max-h-80 overflow-y-auto border p-4">
+                            <div v-for="p in products" class="flex justify-between items-center p-4 bg-gray-50 border">
+                                <span class="font-black text-xs">{{p.name}}</span>
+                                <div class="flex gap-4">
+                                    <button @click="startEdit(p)" class="text-blue-600 font-bold">تعديل</button>
+                                    <button @click="deleteProduct(p.id)" class="text-red-500 font-bold">حذف</button>
                                 </div>
                             </div>
                         </div>
@@ -175,9 +202,9 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-black py-20 text-white text-center">
-            <div class="text-3xl font-black mb-6 italic uppercase">AZOUZ-TK</div>
-            <p class="text-gray-600 text-[10px] font-bold tracking-[3px] uppercase">© 2024 AZOUZ-TK DIGITAL ECOSYSTEM</p>
+        <footer class="bg-black py-32 text-white text-center">
+            <div class="text-4xl font-black mb-12 italic uppercase tracking-tighter">AZOUZ<span class="text-blue-600">TK</span></div>
+            <p class="text-gray-700 text-[10px] font-black uppercase tracking-[5px]">© 2024 AZOUZ-TK DIGITAL ECOSYSTEM. ALL RIGHTS RESERVED.</p>
         </footer>
     </div>
 
@@ -233,71 +260,32 @@
                             this.settings = sSnap.data().settings || this.settings;
                             this.categories = sSnap.data().categories || this.categories;
                         }
-                    } catch (e) { console.error("Load Error:", e); }
+                    } catch (e) { console.error(e); }
                     this.loading = false;
                 },
                 async saveProduct() {
-                    if(!this.newP.name || !this.newP.price) return alert("أكمل البيانات");
+                    // لا توجد قيود، يقبل أي شيء
                     try {
                         if(this.editMode) {
                             await db.collection('products').doc(this.editId).update({...this.newP});
-                            alert("تم التحديث!");
                         } else {
                             await db.collection('products').add({...this.newP, date: new Date()});
-                            alert("تم النشر!");
                         }
                         this.cancelEdit();
                         await this.loadData();
-                    } catch (e) { alert("حدث خطأ في الحفظ"); }
+                        alert('تم بنجاح!');
+                    } catch (e) { alert('خطأ في الاتصال بقاعدة البيانات'); }
                 },
-                startEdit(p) {
-                    this.editMode = true;
-                    this.editId = p.id;
-                    this.newP = { ...p };
-                    window.scrollTo(0, 300);
-                },
-                cancelEdit() {
-                    this.editMode = false;
-                    this.editId = null;
-                    this.newP = { name: '', price: '', cat: 'الكل', img: '', desc: '', salla_id: '' };
-                },
-                async deleteProduct(id) {
-                    if(confirm('حذف؟')) {
-                        await db.collection('products').doc(id).delete();
-                        await this.loadData();
-                    }
-                },
-                async updateSettings() {
-                    try {
-                        await db.collection('config').doc('main').set({ settings: this.settings, categories: this.categories });
-                        alert('تم حفظ الإعدادات!');
-                    } catch (e) { alert("فشل الحفظ"); }
-                },
-                async addCategory() {
-                    if(this.newCat && !this.categories.includes(this.newCat)) {
-                        this.categories.push(this.newCat);
-                        await this.updateSettings();
-                        this.newCat = '';
-                    }
-                },
-                async deleteCategory(cat) {
-                    if(confirm('حذف القسم؟')) {
-                        this.categories = this.categories.filter(c => c !== cat);
-                        await this.updateSettings();
-                    }
-                },
-                openAdmin() {
-                    const pass = prompt('أدخل رمز الإدارة:');
-                    if(pass === this.settings.admin_pass) this.view = 'admin';
-                    else if(pass) alert('الرمز خطأ!');
-                },
-                showProduct(p) {
-                    this.selectedProduct = p;
-                    this.view = 'detail';
-                    window.scrollTo(0,0);
-                },
+                startEdit(p) { this.editMode = true; this.editId = p.id; this.newP = {...p}; window.scrollTo(0, 500); },
+                cancelEdit() { this.editMode = false; this.editId = null; this.newP = { name: '', price: '', cat: 'الكل', img: '', desc: '', salla_id: '' }; },
+                async deleteProduct(id) { if(confirm('حذف؟')) { await db.collection('products').doc(id).delete(); await this.loadData(); } },
+                async updateSettings() { await db.collection('config').doc('main').set({ settings: this.settings, categories: this.categories }); alert('تم الحفظ!'); },
+                async addCategory() { if(this.newCat) { this.categories.push(this.newCat); await this.updateSettings(); this.newCat = ''; } },
+                async deleteCategory(cat) { this.categories = this.categories.filter(c => c !== cat); await this.updateSettings(); },
+                openAdmin() { let p = prompt('رمز الإدارة:'); if(p === this.settings.admin_pass) this.view = 'admin'; },
+                showProduct(p) { this.selectedProduct = p; this.view = 'detail'; window.scrollTo(0,0); },
                 goHome() { this.view = 'home'; window.scrollTo(0,0); },
-                scrollToProducts() { document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' }); }
+                scrollToProducts() { document.getElementById('products-area').scrollIntoView({ behavior: 'smooth' }); }
             }
         }).mount('#app');
     </script>
